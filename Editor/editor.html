@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <script>quill_js_core</script>
+    <style>quill_style</style>
+
+    <!--<link rel="stylesheet" href="quill.snow.css">
+    <script src="quill.js"></script><script src="quill.image.resize.js"></script>-->
+
+    <style>
+        html, body {
+            margin: 0 !important;
+        }
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="14px"]::before {
+            content: 'Normal';
+            font-size: 14px !important;
+        }
+
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="18px"]::before {
+            content: 'Large';
+            font-size: 18px !important;
+        }
+
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="24px"]::before {
+            content: 'Huge';
+            font-size: 24px !important;
+        }
+    </style>
+
+
+</head>
+<body>
+<div id="editor-container">
+</div>
+<script>quill_js_module_image_drop</script>
+<script>quill_js_module_image_resize</script>
+<script>
+    // Prevent right click
+    window.addEventListener('contextmenu', (event) => event.preventDefault());
+
+    // Prevent drop
+    window.addEventListener('dragover', function (e) { e.preventDefault(); }, false);
+    window.addEventListener('drop', function (e) { e.preventDefault(); }, false);
+
+    var SizeStyle = Quill.import('attributors/style/size');
+    SizeStyle.whitelist = ['14px', '18px', '24px'];
+    Quill.register(SizeStyle, true);
+
+    var quill = new Quill('#editor-container', {
+        modules: {
+            toolbar: [
+                [{ 'font': [] }],
+                [{ 'size': ['14px', '18px', '24px'] }],
+                ['bold', 'italic', 'underline'],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                [{ 'align': [] }, { 'direction': 'rtl' }],
+                ['image', 'code-block']
+            ],
+            imageDrop: true,
+            imageResize: {}
+        },
+        placeholder: '',
+        theme: 'snow'
+    });
+    quill.root.setAttribute('spellcheck', false);
+
+    function getPrintHeight() {
+        return document.getElementsByClassName("ql-container")[0].clientHeight;
+    }
+
+    function togglePrint(value) {
+
+        var els = document.getElementsByClassName("ql-toolbar");
+        for (const el in els) {
+            try {
+                if (value)
+                    els[el].style.display = "none";
+                else
+                    els[el].style.removeProperty('display');            }
+            catch(err) {
+            }
+        }
+
+        els = document.getElementsByClassName("ql-container");
+        for (const el in els) {
+            try {
+                if (value)
+                    els[el].style.border = "none";
+                else
+                    els[el].style.removeProperty('border');            }
+            catch(err) {
+            }
+        }
+
+    } 
+</script>
+</body>
+</html>

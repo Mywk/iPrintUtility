@@ -1,0 +1,6 @@
+﻿.vs
+bin
+obj
+iPrint Utility.csproj.user
+Properties/PublishProfiles
+Properties/launchSettings.json

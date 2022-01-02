@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>iPrintUtility</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>iPrintUtility</AssemblyName>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Editor\editor.html" />
+    <None Remove="Editor\quill.image.drop.js" />
+    <None Remove="Editor\quill.image.resize.js" />
+    <None Remove="Editor\quill.js" />
+    <None Remove="Editor\quill.snow.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="InTheHand.BluetoothLE" Version="4.0.20" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.864.35" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    <PackageReference Include="System.IO.Ports" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Editor\editor.html" />
+    <EmbeddedResource Include="Editor\quill.image.drop.js" />
+    <EmbeddedResource Include="Editor\quill.image.resize.js" />
+    <EmbeddedResource Include="Editor\quill.js" />
+    <EmbeddedResource Include="Editor\quill.snow.css" />
+  </ItemGroup>
+
+</Project>
