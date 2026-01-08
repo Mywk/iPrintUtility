@@ -192,6 +192,38 @@ namespace iPrintUtility
             var env = await CoreWebView2Environment.CreateAsync(null, Path.Combine(Path.GetTempPath(),"iPrinter"));
             await WebView.EnsureCoreWebView2Async(env);
             WebView.NavigateToString(htmlContent);
+
+            // Inject CSS to force light theme after navigation
+            WebView.CoreWebView2.NavigationCompleted += async (s, e) =>
+            {
+                string forceLightCss = @"
+                    (function() {
+                        var style = document.createElement('style');
+                        style.innerHTML = `
+                            html, body { background: #fff !important; color: #000 !important; }
+                            * { background-color: inherit !important; color: inherit !important; }
+                            @media (prefers-color-scheme: dark) {
+                                html, body { background: #fff !important; color: #000 !important; }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                        // Override prefers-color-scheme to always light
+                        Object.defineProperty(window, 'matchMedia', {
+                            value: (query) => ({
+                                matches: query === '(prefers-color-scheme: light)',
+                                media: query,
+                                onchange: null,
+                                addListener: function() {},
+                                removeListener: function() {},
+                                addEventListener: function() {},
+                                removeEventListener: function() {},
+                                dispatchEvent: function() { return false; }
+                            })
+                        });
+                    })();
+                ";
+                await WebView.ExecuteScriptAsync(forceLightCss);
+            };
         }
 
         BluetoothPrinter selectedDevice;
