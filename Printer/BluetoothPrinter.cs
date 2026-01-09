@@ -45,7 +45,7 @@ namespace iPrintUtility.Printer
 
                 var device = new BluetoothPrinter(dev);
 
-                List<string> supportedPrinters = new List<string>() { "XW001", "XW002", "XW003", "XW004", "XW005", "XW006", "XW007", "XW008", "XW009", "JX001", "JX002", "JX003", "JX004", "JX005", "JX006", "M01", "PR07", "PR02", "GB01", "GB02", "GB03", "GB04", "LY01", "LY02", "LY03", "LY10", "AI01", "GT01" };
+                List<string> supportedPrinters = new List<string>() { "MX10", "XW001", "XW002", "XW003", "XW004", "XW005", "XW006", "XW007", "XW008", "XW009", "JX001", "JX002", "JX003", "JX004", "JX005", "JX006", "M01", "PR07", "PR02", "GB01", "GB02", "GB03", "GB04", "LY01", "LY02", "LY03", "LY10", "AI01", "GT01" };
                 
                 if(supportedPrinters.Any(p => p.Contains(dev.Name)))
                     devices.Add(device);
