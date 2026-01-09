@@ -39,6 +39,8 @@ namespace iPrintUtility
 
         private bool _isLoaded = false;
 
+        private bool forceShowAllDevices = false;
+
         /// <summary>
         /// Load previous scan if available or scan if necessary
         /// </summary>
@@ -124,7 +126,7 @@ namespace iPrintUtility
 
             // Otherwise perform a fresh scan
             if (!devicesLoaded)
-                _ = RefreshAvailableDevices();
+                _ = RefreshAvailableDevices(forceShowAllDevices);
 
             await LoadEditorAsync();
 
@@ -138,7 +140,7 @@ namespace iPrintUtility
         }
 
         /// <summary>
-        /// Self explanatory
+        /// Self-explanatory
         /// </summary>
         private bool isPrinting = false;
 
@@ -172,7 +174,7 @@ namespace iPrintUtility
         }
 
         /// <summary>
-        /// Loads our beautiful chromium browser and the editor into it
+        /// Loads our beautiful Chromium browser and the editor into it
         /// </summary>
         /// <returns></returns>
         private async Task LoadEditorAsync()
@@ -291,7 +293,7 @@ namespace iPrintUtility
         /// Scans for devices and updates the UI accordingly
         /// </summary>
         /// <returns></returns>
-        async Task RefreshAvailableDevices()
+        async Task RefreshAvailableDevices(bool allDevices = false)
         {
             if (isScanning)
                 return;
@@ -303,7 +305,7 @@ namespace iPrintUtility
             AddLog("Scanning devices.\r\nThis may take up to 30 seconds.");
 
 
-            var devices = await BluetoothPrinter.ScanDevicesAsync();
+            var devices = await BluetoothPrinter.ScanDevicesAsync(allDevices);
 
             foreach (var device in devices)
             {
@@ -396,7 +398,7 @@ namespace iPrintUtility
 
         private void refreshButton_Click(object sender, RoutedEventArgs e)
         {
-            _ = RefreshAvailableDevices();
+            _ = RefreshAvailableDevices(forceShowAllDevices);
         }
 
         private void devicesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -667,6 +669,14 @@ namespace iPrintUtility
                 this.WindowState = WindowState.Normal;
                 e.Handled = true;
             }
+        }
+
+        private async void ForceShowAllDevicesToggleButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            forceShowAllDevices = ForceShowAllDevicesToggleButton.IsChecked == true;
+                            
+            // Force refresh
+            _ = RefreshAvailableDevices(forceShowAllDevices);
         }
     }
 }

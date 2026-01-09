@@ -125,7 +125,9 @@
                         <Button Margin="10 0 0 0" Height="25" Width="20" x:Name="RefreshButton" Content="🗘" Click="refreshButton_Click" />
                     </StackPanel>
 
-                    <Button Grid.Row="2" Name="ConnectButton" ToolTip="Connect/Disconnect" IsEnabled="False" Width="100" VerticalAlignment="Center" Content="Connect" Click="connectButton_Click" HorizontalAlignment="Right" />
+                    <ToggleButton Grid.Row="2" Name="ForceShowAllDevicesToggleButton" IsChecked="False" Width="140" Content="Force show all devices" HorizontalAlignment="Left" Click="ForceShowAllDevicesToggleButton_OnClick" />
+                    
+                    <Button Grid.Row="2" Name="ConnectButton" ToolTip="Connect/Disconnect" IsEnabled="False" Width="90" VerticalAlignment="Center" Content="Connect" Click="connectButton_Click" HorizontalAlignment="Right" />
 
                     <Label Grid.Row="4" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="-5 0 0 0">Quality</Label>
 
